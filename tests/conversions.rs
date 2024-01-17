@@ -1,7 +1,7 @@
-use dependent_generics_rs::{Equal, Exclude, Range};
+use const_generics_rs::{Equal, Exclude, Range};
 
 #[test]
-fn into_equal_pass() {
+fn into_equal_eq() {
     let x: Equal<4> = 4.into();
     let y: u128 = x.into();
     assert_eq!(y, 4)
@@ -9,12 +9,12 @@ fn into_equal_pass() {
 
 #[test]
 #[should_panic]
-fn into_equal_panic() {
-    let x: Equal<4> = 7.into();
+fn into_equal_ne() {
+    let _x: Equal<4> = 7.into();
 }
 
 #[test]
-fn into_exclude_pass() {
+fn into_exclude_ne() {
     let x: Exclude<4> = 7.into();
     let y: u128 = x.into();
     assert_eq!(y, 7)
@@ -22,12 +22,12 @@ fn into_exclude_pass() {
 
 #[test]
 #[should_panic]
-fn into_exclude_panic() {
-    let x: Exclude<4> = 4.into();
+fn into_exclude_eq() {
+    let _x: Exclude<4> = 4.into();
 }
 
 #[test]
-fn into_range_pass() {
+fn into_range_inside() {
     let x: Range<10, 15> = 12.into();
     let y: u128 = x.into();
     assert_eq!(y, 12)
@@ -35,12 +35,12 @@ fn into_range_pass() {
 
 #[test]
 #[should_panic]
-fn into_range_panic_high() {
-    let x: Range<10, 15> = 17.into();
+fn into_range_too_high() {
+    let _x: Range<10, 15> = 17.into();
 }
 
 #[test]
 #[should_panic]
-fn into_range_panic_low() {
-    let x: Range<10, 15> = 4.into();
+fn into_range_too_low() {
+    let _x: Range<10, 15> = 4.into();
 }
