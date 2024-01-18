@@ -1,6 +1,10 @@
 use std::{fmt::Display, ops::Add};
 
-use crate::{base::{IType, I}, Ex, Range, assert::{True, Assert}};
+use crate::{
+    assert::{Assert, True},
+    base::{IType, I},
+    Ex, Range,
+};
 
 /// n ∈ {N}
 #[derive(Clone, Copy, Debug)]

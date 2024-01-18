@@ -1,10 +1,10 @@
 //! # Playing with const generics
-//! 
+//!
 //! This library defines the following wrapper types for [I], ordered on specificity:
 //! 1. [Eq] - An integer equal to a specific value
 //! 1. [Range] - An integer within a range of values
 //! 1. [Ex] - An integer not equal to a specific value
-//! 
+//!
 //! Additions of these types have the following properties:
 //! - [x] `Eq<I>       + Eq<I>       -> Eq<I>`
 //! - [x] `Eq<I>       + Range<I, I> -> Range<I, I>`
@@ -20,10 +20,10 @@
 mod assert;
 mod base;
 mod equal;
-mod range;
 mod exclude;
+mod range;
 
 pub use base::I;
 pub use equal::Eq;
-pub use range::Range;
 pub use exclude::Ex;
+pub use range::Range;
