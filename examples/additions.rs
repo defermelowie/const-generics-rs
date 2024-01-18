@@ -32,4 +32,10 @@ fn main() {
     let b: Ex<5> = 6.into();
     let c = a + b;
     println!("{} + {} = {}", a, b, c);
+
+    // Range<I, I> + Ex<I> -> I
+    let a: Ex<5> = 6.into();
+    let b: Range<8, 15> = 9.into();
+    let c = a + b;
+    println!("{} + {} = {}", a, b, c);
 }

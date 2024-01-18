@@ -51,3 +51,13 @@ fn add_equal_exclude_commutative() {
     let d = b + a;
     assert_eq!(c, d);
 }
+
+#[test]
+fn add_range_exclude_commutative() {
+    // Range<I, I> + Ex<I> -> I
+    let a: Ex<5> = 6.into();
+    let b: Range<8, 15> = 9.into();
+    let c = a + b;
+    let d = b + a;
+    assert_eq!(c, d);
+}

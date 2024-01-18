@@ -1,6 +1,6 @@
 use std::{fmt::Display, ops::Add};
 
-use crate::base::{IType, I};
+use crate::{base::{IType, I}, Ex, Range, assert::{True, Assert}};
 
 /// n ∈ {N}
 #[derive(Clone, Copy, Debug)]
@@ -32,6 +32,8 @@ impl<const E_LHS: I, const E_RHS: I> PartialEq<Eq<E_RHS>> for Eq<E_LHS> {
     }
 }
 
+// -----------------------------------------------------------------------------
+
 impl<const E_LHS: I, const E_RHS: I> Add<Eq<E_RHS>> for Eq<E_LHS>
 where
     [(); { E_LHS + E_RHS } as usize]:,
@@ -39,6 +41,29 @@ where
     type Output = Eq<{ E_LHS + E_RHS }>;
 
     fn add(self, rhs: Eq<E_RHS>) -> Self::Output {
-        Eq::<{ E_LHS + E_RHS }>(self.0 + rhs.0)
+        Self::Output::from(self.0 + rhs.0)
+    }
+}
+
+impl<const L: I, const U: I, const N: I> Add<Range<L, U>> for Eq<N>
+where
+    Assert<{ L <= U }>: True,
+    Assert<{ L + N <= U + N }>: True,
+{
+    type Output = Range<{ L + N }, { U + N }>;
+
+    fn add(self, rhs: Range<L, U>) -> Self::Output {
+        Self::Output::from(self.0 + rhs.0)
+    }
+}
+
+impl<const E: I, const N: I> Add<Ex<E>> for Eq<N>
+where
+    [(); (N + E) as usize]:,
+{
+    type Output = Ex<{ N + E }>;
+
+    fn add(self, rhs: Ex<E>) -> Self::Output {
+        Self::Output::from(self.0 + rhs.0)
     }
 }

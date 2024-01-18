@@ -3,7 +3,7 @@ use std::ops::Add;
 
 use crate::assert::{Assert, True};
 use crate::base::{IType, I};
-use crate::equal::Eq;
+use crate::{Eq, Ex};
 
 /// n ∈ \[L; U\]
 #[derive(Clone, Copy, Debug)]
@@ -64,6 +64,20 @@ where
     }
 }
 
+// -----------------------------------------------------------------------------
+
+impl<const L: I, const U: I, const N: I> Add<Eq<N>> for Range<L, U>
+where
+    Assert<{ L <= U }>: True,
+    Assert<{ L + N <= U + N }>: True,
+{
+    type Output = Range<{ L + N }, { U + N }>;
+
+    fn add(self, rhs: Eq<N>) -> Self::Output {
+        rhs + self
+    }
+}
+
 impl<const L_LHS: I, const U_LHS: I, const L_RHS: I, const U_RHS: I> Add<Range<L_RHS, U_RHS>>
     for Range<L_LHS, U_LHS>
 where
@@ -78,28 +92,13 @@ where
     }
 }
 
-// -----------------------------------------------------------------------------
-
-impl<const L: I, const U: I, const N: I> Add<Eq<N>> for Range<L, U>
+impl<const L: I, const U: I, const E: I> Add<Ex<E>> for Range<L, U>
 where
     Assert<{ L <= U }>: True,
-    Assert<{ L + N <= U + N }>: True,
 {
-    type Output = Range<{ L + N }, { U + N }>;
+    type Output = I;
 
-    fn add(self, rhs: Eq<N>) -> Self::Output {
+    fn add(self, rhs: Ex<E>) -> Self::Output {
         Self::Output::from(self.0 + rhs.0)
-    }
-}
-
-impl<const L: I, const U: I, const N: I> Add<Range<L, U>> for Eq<N>
-where
-    Assert<{ L <= U }>: True,
-    Assert<{ L + N <= U + N }>: True,
-{
-    type Output = Range<{ L + N }, { U + N }>;
-
-    fn add(self, rhs: Range<L, U>) -> Self::Output {
-        rhs + self
     }
 }

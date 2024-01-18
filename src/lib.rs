@@ -7,10 +7,10 @@
 //! 
 //! Additions of these types have the following properties:
 //! - [x] `Eq<I>       + Eq<I>       -> Eq<I>`
-//! - [ ] `Eq<I>       + Range<I, I> -> Range<I, I>`
+//! - [x] `Eq<I>       + Range<I, I> -> Range<I, I>`
 //! - [x] `Eq<I>       + Ex<I>       -> Ex<I>`
 //! - [x] `Range<I, I> + Range<I, I> -> Range<I, I>`
-//! - [ ] `Range<I, I> + Ex<I>       -> I`
+//! - [x] `Range<I, I> + Ex<I>       -> I`
 //! - [x] `Ex<I>       + Ex<I>       -> I`
 
 #![feature(generic_const_exprs)]
